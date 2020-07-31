@@ -1,0 +1,17 @@
+.btn-search {
+  border-radius: 50% !important;
+  background-color: white !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  min-height: 45px;
+  min-width: 45px !important;
+}
+button:focus {
+  outline: unset !important;
+}
+.btn-search > span > svg {
+  color: #999 !important;
+}
+
+.input-search {
+  min-width: 700px;
+}

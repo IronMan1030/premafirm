@@ -1,0 +1,95 @@
+.chart-panel {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  background-color: white;
+  border-radius: 5px;
+}
+.chart-panel > img {
+  padding: 15px;
+}
+.chart-panel > p {
+  width: 100px;
+  color: #3c4858;
+  font-weight: 300;
+}
+.chart-panel > span {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 50%;
+  background-color: #fb8c00;
+  color: white;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding-top: 5px;
+}
+.chart-panel > svg {
+  margin-left: 10px;
+  width: 12px !important;
+  color: #999;
+}
+.panel-icon {
+  border-radius: 3px;
+  background: linear-gradient(60deg, #66bb6a, #43a047);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(76, 175, 80, 0.4);
+  padding: 23px;
+  margin-top: -37px;
+  margin-right: 15px;
+  float: left;
+}
+.panel-icon1 {
+  border-radius: 3px;
+  background: linear-gradient(60deg, #ffa726, #fb8c00);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(255, 152, 0, 0.4);
+  padding: 27px;
+  margin-top: -37px;
+  margin-right: 15px;
+  float: left;
+}
+.panel-icon2 {
+  border-radius: 3px;
+  background: linear-gradient(60deg, #ec407a, #d81b60);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(233, 30, 99, 0.4);
+  padding: 27px;
+  margin-top: -37px;
+  margin-right: 15px;
+  float: left;
+}
+.panel-icon3 {
+  border-radius: 3px;
+  background: linear-gradient(60deg, #66bb6a, #43a047);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(76, 175, 80, 0.4);
+  padding: 27px;
+  margin-top: -37px;
+  margin-right: 15px;
+  float: left;
+}
+.panel-icon4 {
+  border-radius: 3px;
+  background: linear-gradient(60deg, #26c6da, #00acc1);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(0, 188, 212, 0.4);
+  padding: 27px;
+  margin-top: -37px;
+  margin-right: 15px;
+  float: left;
+}
+.top-panel-color {
+  color: white;
+  font-size: 25px;
+}
+
+.product-status-panel > p {
+  color: #999;
+  font-size: 16px;
+  float: right;
+  margin-top: -33px;
+}
+.product-status-panel > span {
+  font-weight: 300;
+  color: #3c4858;
+  float: right;
+  font-size: 1.5625rem;
+}
