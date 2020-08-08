@@ -12,10 +12,10 @@ function SearchProductsBar() {
           placeholder="Search for products to sell"
           className="input-search"
         />
+        <Button type="button" className="btn-search">
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
       </div>
-      <Button type="button" className="btn-search">
-        <FontAwesomeIcon icon={faSearch} />
-      </Button>
     </div>
   );
 }

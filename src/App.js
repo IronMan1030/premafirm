@@ -4,31 +4,59 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import SearchProducts from "./pages/SearchProducts";
+import SearchProductsResult from "./pages/SearchProductsResult";
 import ImportList from "./pages/ImportList";
 import MyProducts from "./pages/MyProducts";
+import ProductDetail from "./pages/ProductDetail";
 import Orders from "./pages/Orders";
 
 function App() {
-  return (
-    <div className="admin-panel">
-      <div className="d-flex">
-        <BrowserRouter>
-          <div className="left-panel">
-            <Sidebar />
-          </div>
-          <div className="right-panel">
-            <Switch>
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/searchProduct" component={SearchProducts} />
-              <Route exact path="/importList" component={ImportList} />
-              <Route exact path="/myProducts" component={MyProducts} />
-              <Route exact path="/orders" component={Orders} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
-    </div>
-  );
+    return (
+        <div className="admin-panel">
+            <div className="d-flex">
+                <BrowserRouter>
+                    <div className="left-panel">
+                        <Sidebar />
+                    </div>
+                    <div className="right-panel">
+                        <Switch>
+                            <Route
+                                exact
+                                path="/dashboard"
+                                component={Dashboard}
+                            />
+                            <Route
+                                exact
+                                path="/searchProduct"
+                                component={SearchProducts}
+                            />
+                            <Route
+                                exact
+                                path="/searchProduct/productDetail/:productId"
+                                component={ProductDetail}
+                            />
+                            <Route
+                                exact
+                                path="/searchProduct/result/:categoryId"
+                                component={SearchProductsResult}
+                            />
+                            <Route
+                                exact
+                                path="/importList"
+                                component={ImportList}
+                            />
+                            <Route
+                                exact
+                                path="/myProducts"
+                                component={MyProducts}
+                            />
+                            <Route exact path="/orders" component={Orders} />
+                        </Switch>
+                    </div>
+                </BrowserRouter>
+            </div>
+        </div>
+    );
 }
 
 export default App;

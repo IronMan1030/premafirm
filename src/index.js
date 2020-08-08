@@ -4,10 +4,5 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./fontawesome";
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+import "react-image-gallery/styles/css/image-gallery.css";
+ReactDOM.render(<App />, document.getElementById("root"));

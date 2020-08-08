@@ -15,3 +15,14 @@ button:focus {
 .input-search {
   min-width: 700px;
 }
+.btn-outline-success {
+  width: 100%;
+}
+.border-line {
+  border: solid 1px #d6d5d5;
+}
+.border-line svg {
+  color: #c7c3c3 !important;
+  margin-top: 6px;
+  margin-right: 8px;
+}
