@@ -75,7 +75,7 @@ function SearchProductsResult(props) {
             <SearchProductsBar placeHolder={Utils.SEARCH_PLACEHOLDER_FOR_PRODUCTS} />
 
             <Row className="m-unset mt-4">
-                <Col lg={3} md={12} className="p-unset pl-5">
+                <Col lg={3} md={12} className="pl-5 p-unset">
                     <div className="d-flex mini-font-size mb-2">
                         <Link to="/products/searchProduct" className="alink-style">
                             Home

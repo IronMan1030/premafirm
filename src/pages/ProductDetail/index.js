@@ -30,7 +30,7 @@ function ProductDetail(props) {
             return { original: image.url, thumbnail: image.url };
         });
 
-    console.log(singleProduct);
+    
     return (
         <div className="p-font-dark">
             <p className="menu-title">Product Details</p>
@@ -74,7 +74,7 @@ function ProductDetail(props) {
                                     singleProduct.attribute_line_ids.map((attribute, index) => {
                                         if (attribute.display_name === "Size") {
                                             return (
-                                                <div key={index} className="d-flex ml-3">
+                                                <div key={index} className="ml-3">
                                                     {attribute.value_ids.map((value, index) => (
                                                         <span className="btn-size" key={index}>
                                                             {value.name}

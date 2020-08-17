@@ -62,8 +62,8 @@
     margin: unset !important;
 }
 .p-unset {
-    padding: unset !important;
+    padding: unset;
 }
 .cursor {
-    cursor: pointer;
+    cursor: pointer;   
 }

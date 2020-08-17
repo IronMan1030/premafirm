@@ -28,6 +28,9 @@ function Sidebar() {
     }, []);
     const init = () => {
         let getBasicPathName = window.location.pathname;
+        if(getBasicPathName==="/"){
+            window.location.href="/dashboard";
+        }
         let getMainPathName = "";
         let getSubPathName = "";
         const mainPathName = ["products", "manageOrders", "inbox"];

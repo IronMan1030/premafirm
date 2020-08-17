@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Images(props) {
     const { originImages } = props;
-    console.log(originImages);
+    
     return (
         <div>
             {props.tabActive === 4 && (
@@ -30,7 +30,7 @@ function Images(props) {
 
                             <Row className="block-content">
                                 {originImages.map((image) => {
-                                    console.log(image);
+                                    
                                     return (
                                         <Col xs={6} md={5} className="mb-4" key={image.id}>
                                             <div className="block-little-img-product">

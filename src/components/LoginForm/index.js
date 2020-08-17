@@ -27,7 +27,7 @@ function LoginForm() {
         setProcessing(true);
         let response = await axios.post(nodeSeverApiUrl, { email: userEmail, password: password });
         setProcessing(false);
-        console.log(response);
+        
         if (response.data.error) {
             setAlertData(response.data.error);
             return;
