@@ -2,28 +2,39 @@ const router = require("express").Router();
 let Product = require("../models/product.model");
 
 router.post("/add", async (req, res) => {
-    const newProduct = new Product({
-        product: { productId: req.body.productId },
+    const newOriginProduct = new Product({
+        userId: req.body.userId,
+        originProduct: req.body.product,
     });
 
     try {
-        // let result = await Product.find({
-        //     "product.productId": req.body.productId,
-        // });
-        // if (result && result.length) {
-        //     res.json({ error: "productExist" });
-        //     return;
-        // }
-        let result = await newProduct.save();
+        let result = await newOriginProduct.save();
         res.json(result);
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: "databaseFailed" });
     }
 });
-router.get("/list", async (req, res) => {
+router.get("/list/:userId", async (req, res) => {
+    let userId = req.params.userId;
+
     try {
-        let result = await Product.find();
+        let result = await Product.find({ userId: userId });
+        if (!(result && result.length)) {
+            res.json({ error: "productNotFound" });
+        } else {
+            res.json(result);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: "databaseFailed" });
+    }
+});
+router.get("/get/productIds/:userId", async (req, res) => {
+    let userId = req.params.userId;
+
+    try {
+        let result = await Product.find({ userId: userId }, { _id: 0, "originProduct.id": 1 });
         if (!(result && result.length)) {
             res.json({ error: "productNotFound" });
         } else {
@@ -39,11 +50,7 @@ router.post("/update/:id", async (req, res) => {
     let dataToSave = req.body;
     let result = null;
     try {
-        result = await Product.findByIdAndUpdate(
-            productId,
-            { product: dataToSave.product },
-            { new: true }
-        );
+        result = await Product.findByIdAndUpdate(productId, { product: dataToSave.product }, { new: true });
         res.json(result);
     } catch (error) {
         res.status(400).json({ error: "databaseFailed" });

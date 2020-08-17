@@ -1,15 +1,32 @@
-import React from "react";
-import { Media } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Editor } from "@tinymce/tinymce-react";
+
 function Description(props) {
-    console.log(props.tabActive);
+    const { originDesc } = props;
+
+    const handleEditorChange = (e) => {
+        console.log(e.target.getContent());
+    };
+
     return (
         <div>
             {props.tabActive === 2 && (
-                <Media className="block-data-list">
-                    <Media.Body>
-                        <h2>Description</h2>
-                    </Media.Body>
-                </Media>
+                <Editor
+                    initialValue={originDesc}
+                    init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                            "advlist autolink lists link image",
+                            "charmap print preview anchor help",
+                            "searchreplace visualblocks code",
+                            "insertdatetime media table paste wordcount",
+                        ],
+                        toolbar:
+                            "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | help",
+                    }}
+                    onChange={handleEditorChange}
+                />
             )}
         </div>
     );

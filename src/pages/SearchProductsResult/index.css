@@ -1,0 +1,7 @@
+.alink-style {
+    color: #3c4858;
+}
+.alink-style:hover {
+    color: #e91e63 !important;
+    text-decoration: none;
+}

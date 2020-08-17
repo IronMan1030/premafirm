@@ -1,112 +1,95 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import { Container, Row, Col } from "reactstrap";
-import { Button } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 import SearchProductsBar from "../../components/SearchProductsForm/searchProductsBar";
 import axios from "axios";
 import ImageGallery from "react-image-gallery";
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "none" }}
-            onClick={onClick}
-        />
-    );
-}
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "none" }}
-            onClick={onClick}
-        />
-    );
-}
+import * as Utils from "../../utils";
+
 function ProductDetail(props) {
     const [singleProduct, setSingleProduct] = useState([]);
-    const [image, setImage] = useState([]);
 
     useEffect(() => {
         getProduct(props.match.params.productId);
     }, [props]);
     const getProduct = async (productId) => {
-        const apiUrl = `http://premafirm.com/api/v1/premafirm/product.template?domain=[(%27id%27,%27=%27,${productId})]`;
+        const apiUrl = `${process.env.REACT_APP_API_URL}/product.template?domain=[(%27id%27,%27=%27,${productId})]`;
         let response = await axios.get(apiUrl, {
             auth: {
-                username: "premafirm.ca",
-                password: "7a4fb53e-184b-4f5f-a95d-e58dd06e29a0",
+                username: process.env.REACT_APP_BATH_AUTH_USERNAME,
+                password: process.env.REACT_APP_BATH_AUTH_PASSWORD,
             },
         });
-        console.log(response.data);
-        setSingleProduct(response.data);
-    };
 
-    const images = [
-        {
-            original: "https://picsum.photos/id/1018/1000/600/",
-            thumbnail: "https://picsum.photos/id/1018/250/150/",
-        },
-        {
-            original: "https://picsum.photos/id/1015/1000/600/",
-            thumbnail: "https://picsum.photos/id/1015/250/150/",
-        },
-        {
-            original: "https://picsum.photos/id/1019/1000/600/",
-            thumbnail: "https://picsum.photos/id/1019/250/150/",
-        },
-    ];
+        setSingleProduct(response.data[0]);
+    };
+    const images =
+        singleProduct.ept_image_ids &&
+        singleProduct.ept_image_ids.map((image) => {
+            return { original: image.url, thumbnail: image.url };
+        });
+
+    console.log(singleProduct);
     return (
         <div className="p-font-dark">
             <p className="menu-title">Product Details</p>
-            <SearchProductsBar />
+            <SearchProductsBar placeHolder={Utils.SEARCH_PLACEHOLDER_FOR_PRODUCTS} />
             <Container className="mt-5 panel-style">
                 <Row className="p-4">
                     <Col lg="6">
                         <div className="product-details-slider-content">
-                            {/* {singleProduct &&
-                                singleProduct.map((product) => {
-                                    return (
-                                        <div key={product.id}>
-                                            <img
-                                                src={`data:image/png;base64,${product.image_1920}`}
-                                                alt=""
-                                                width={450}
-                                            />
-                                        </div>
-                                    );
-                                })} */}
-                            <ImageGallery items={images} />
+                            {images && <ImageGallery items={images} />}
                         </div>
                     </Col>
                     <Col lg="6">
-                        <p>
-                            Magic Silicone Dishwashing Scrubber Dish Washing
-                            Sponge Rubber Scrub Gloves Kitchen Cleaning 1 Pair
-                        </p>
-                        <Button
-                            variant="outline-success"
-                            className="mt-2"
-                            style={{ maxWidth: "30%" }}
-                        >
+                        <h2 className="title-font-size">{singleProduct.name}</h2>
+                        <Button variant="outline-success" className="mt-2" style={{ maxWidth: "30%" }}>
                             Add to Import List
                         </Button>
                         <hr />
-                        <h3 className="mt-3">$ 75</h3>
-                        <p>
-                            Nemo enim ipsam voluptatem quia aspernatur aut odit
-                            aut loret fugit, sed quia consequuntur magni lores
-                            eos qui ratione voluptatem sequi nesciunt.
-                        </p>
+                        <h4 className="mt-3">CAD $ {singleProduct.standard_price}</h4>
+                        <p>{singleProduct.description}</p>
                         <hr />
-                        <p>Color</p>
-                        <p>Size</p>
+                        <div className="row">
+                            <div className="col-md-1">
+                                <p>Color:</p>
+                            </div>
+                            <div className="col-md-10">
+                                <Image
+                                    src="http://premafirm.com/lf/i/Mjk="
+                                    width={50}
+                                    height={50}
+                                    className="ml-3 mt-2 mb-2"
+                                ></Image>
+                            </div>
+                        </div>
+
+                        <div className="row mt-2">
+                            <div className="col-md-1">
+                                <p>Size:</p>
+                            </div>
+                            <div className="col-md-10">
+                                {singleProduct.attribute_line_ids &&
+                                    singleProduct.attribute_line_ids.map((attribute, index) => {
+                                        if (attribute.display_name === "Size") {
+                                            return (
+                                                <div key={index} className="d-flex ml-3">
+                                                    {attribute.value_ids.map((value, index) => (
+                                                        <span className="btn-size" key={index}>
+                                                            {value.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            );
+                                        }
+                                    })}
+                            </div>
+                        </div>
                         <hr />
                         <p>Shipping</p>
                         <hr />
-                        <p>6885 in stock</p>
+                        <p>{singleProduct.qty_available} in stock</p>
                     </Col>
                 </Row>
             </Container>

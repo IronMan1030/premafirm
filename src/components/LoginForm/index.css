@@ -1,0 +1,16 @@
+.login-background {
+    height: 100vh;
+    background-image: url(/images/background1.png), linear-gradient(226deg, rgb(15, 114, 68) 48%, rgb(17, 97, 73) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.login-form {
+    background-color: white;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 2;
+    width: 450px;
+    height: 100%;
+}

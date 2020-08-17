@@ -1,6 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+
 function Images(props) {
+    const { originImages } = props;
+    console.log(originImages);
     return (
         <div>
             {props.tabActive === 4 && (
@@ -17,111 +20,32 @@ function Images(props) {
                                         />
                                     </div>
                                     <img
-                                        src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
+                                        src={originImages[0].url}
                                         alt=""
                                         className="img-product"
+                                        style={{ maxHeight: "380px" }}
                                     />
                                 </div>
                             </Col>
 
                             <Row className="block-content">
-                                <Col xs={6} md={5} className="mb-4">
-                                    <div className="block-little-img-product">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col xs={6} md={5} className="mb-4">
-                                    <div className="block-little-img-product">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col xs={6} md={5}>
-                                    <div className="block-little-img-product mb-4">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col xs={6} md={5}>
-                                    <div className="block-little-img-product mb-4">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
-
-                                <Col xs={6} md={5}>
-                                    <div className="block-little-img-product mb-4">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
-                                <Col xs={6} md={5}>
-                                    <div className="block-little-img-product mb-4">
-                                        <div className="block-validate-product">
-                                            <img
-                                                src="https://www.edumilestones.com/ccis/static/tick_icon.png"
-                                                alt=""
-                                                className="icon-product"
-                                            />
-                                        </div>
-                                        <img
-                                            src="https://media.but.fr/images_produits/produit-niv3/3216383128683_Q.jpg"
-                                            alt=""
-                                            className="img-product"
-                                        />
-                                    </div>
-                                </Col>
+                                {originImages.map((image) => {
+                                    console.log(image);
+                                    return (
+                                        <Col xs={6} md={5} className="mb-4" key={image.id}>
+                                            <div className="block-little-img-product">
+                                                <div className="block-validate-product">
+                                                    <img
+                                                        src="https://www.edumilestones.com/ccis/static/tick_icon.png"
+                                                        alt={`tick${image.id}`}
+                                                        className="icon-product"
+                                                    />
+                                                </div>
+                                                <img src={image.url} alt={`pic${image.id}`} className="img-product" />
+                                            </div>
+                                        </Col>
+                                    );
+                                })}
                             </Row>
                         </div>
                     </Row>

@@ -3,24 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 import Input from "@material-ui/core/Input";
-import axios from "axios";
 
 function ProductsCategory(props) {
-    const [categories, setCategories] = useState([]);
-    useEffect(() => {
-        const getCategories = async () => {
-            const apiUrl =
-                "http://www.premafirm.com/api/v1/premafirm/product.category";
-            let response = await axios.get(apiUrl, {
-                auth: {
-                    username: "premafirm.ca",
-                    password: "7a4fb53e-184b-4f5f-a95d-e58dd06e29a0",
-                },
-            });
-            setCategories(response.data);
-        };
-        getCategories();
-    }, []);
+    const { categories } = props;
+
     const handleChangeCategory = (
         categoryId,
         categoryCompleteName,
@@ -31,6 +17,7 @@ function ProductsCategory(props) {
             handleClickCategory(categoryId, categoryCompleteName, productCount);
         }
     };
+
     return (
         <div className="panel-style p-3">
             <div className="border-line">
@@ -39,17 +26,16 @@ function ProductsCategory(props) {
                     <hr />
                 </div>
                 <div className="ml-3 mr-2">
-                    {categories &&
-                        categories.map((category, index) => {
+                    {categories.child_id &&
+                        categories.child_id.map((category, index) => {
                             return (
                                 <div
-                                    className="d-flex cursor"
+                                    className="d-flex cursor mb-2"
                                     key={index}
                                     onClick={() => {
                                         handleChangeCategory(
                                             category.id,
-                                            category.complete_name,
-                                            category.product_count
+                                            category.name
                                         );
                                     }}
                                 >
