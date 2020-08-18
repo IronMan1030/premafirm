@@ -28,8 +28,8 @@ function Sidebar() {
     }, []);
     const init = () => {
         let getBasicPathName = window.location.pathname;
-        if(getBasicPathName==="/"){
-            window.location.href="/dashboard";
+        if (getBasicPathName === "/") {
+            window.location.href = "/dashboard";
         }
         let getMainPathName = "";
         let getSubPathName = "";
@@ -241,7 +241,7 @@ function Sidebar() {
                             onClick={() => {
                                 setUserCollapse(!userCollapse);
                             }}
-                            className={userCollapse ? "svg-rotate" : ""}
+                            className={userCollapse ? "svg-rotate cursor" : "cursor"}
                         />
                     </div>
                     <div

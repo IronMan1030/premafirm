@@ -14,6 +14,7 @@ function SearchProducts(props) {
         const getCategories = async () => {
             const apiUrlByCategories = `${process.env.REACT_APP_API_URL}/product.category`;
             const apiUrlByNodeProductIds = `${process.env.REACT_APP_NODE_SERVER_URL}/v1/product/get/productIds/${sessionUserInfo._id}`;
+            console.log(apiUrlByNodeProductIds);
 
             await Promise.all([
                 axios.get(apiUrlByCategories, {

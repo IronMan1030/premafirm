@@ -10,6 +10,7 @@ let sessionUserInfo = JSON.parse(sessionStorage.getItem(Utils.SESSION_STORE_OWNE
 function ImportList() {
     const [originProducts, setOriginProducts] = useState([]);
     const [isProcessing, setProcessing] = useState(false);
+
     useEffect(() => {
         const getOriginProducts = async () => {
             const apiUrlByProducts = `${process.env.REACT_APP_NODE_SERVER_URL}/v1/product/list/${sessionUserInfo._id}`;
@@ -28,12 +29,18 @@ function ImportList() {
     return (
         <div className="mr-4">
             <p className="menu-title">Import List</p>
-            <SearchProductsBar placeHolder={Utils.SEARCH_PLACEHOLDER_KEYWORDS} />
-            <div className="container mt-5">
-                {originProducts.map((product, index) => {
-                    return <ImportListForm key={index} originProduct={product} />;
-                })}
-            </div>
+            {!originProducts.length ? (
+                <h3 className="text-center p-font-dark">Your import list is empty.</h3>
+            ) : (
+                <div>
+                    <SearchProductsBar placeHolder={Utils.SEARCH_PLACEHOLDER_KEYWORDS} />
+                    <div className="container mt-5">
+                        {originProducts.map((product, index) => {
+                            return <ImportListForm key={index} originProduct={product} />;
+                        })}
+                    </div>
+                </div>
+            )}
             {isProcessing && <SpinnerView />}
         </div>
     );

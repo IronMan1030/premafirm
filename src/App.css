@@ -59,11 +59,11 @@
     text-overflow: ellipsis;
 }
 .m-unset {
-    margin: unset !important;
+    margin: unset;
 }
 .p-unset {
     padding: unset;
 }
 .cursor {
-    cursor: pointer;   
+    cursor: pointer;
 }

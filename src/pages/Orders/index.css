@@ -1,0 +1,33 @@
+.shipping-card {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    border-radius: 28px;
+    color: white;
+    width: 90px;
+    height: 26px;
+    text-align: center;
+}
+.order-card {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    border-radius: 28px;
+    color: white;
+    width: 90px;
+    height: 26px;
+    text-align: center;
+}
+.order-button {
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    border-radius: 5px;
+    border-color: white;
+    color: white;
+    border: none;
+    width: 160px;
+    height: 40px;
+}
+.order-item {
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
+    padding: 6px;
+}

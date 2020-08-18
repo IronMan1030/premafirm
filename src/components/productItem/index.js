@@ -22,7 +22,7 @@ function ProductItem(props) {
     }, [product]);
 
     const handleImageClick = (productId) => {
-        window.location.href = `/products/searchProduct/productDetail/${productId}`;
+        window.open(`/products/searchProduct/productDetail/${productId}`);
     };
 
     const handleClickAdd = async () => {
