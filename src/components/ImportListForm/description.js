@@ -3,16 +3,15 @@ import { Editor } from "@tinymce/tinymce-react";
 
 function Description(props) {
     const { originDesc } = props;
-
     const handleEditorChange = (e) => {
-        console.log(e.target.getContent());
+        props.handleSaveDesc(e.target.getContent());
     };
 
     return (
         <div>
             {props.tabActive === 2 && (
                 <Editor
-                    initialValue={originDesc}
+                    initialValue={originDesc ? originDesc : "Empty"}
                     init={{
                         height: 500,
                         menubar: false,

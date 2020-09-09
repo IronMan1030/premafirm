@@ -7,6 +7,7 @@ import * as Utils from "../../utils";
 
 function ProductItem(props) {
     const { product } = props;
+
     let sessionUserInfo = JSON.parse(sessionStorage.getItem(Utils.SESSION_STORE_OWNER));
     const [isAddedToList, setAddedToList] = useState(false);
 
@@ -48,7 +49,7 @@ function ProductItem(props) {
         <div>
             {product && (
                 <Card className="panel-style" style={{ margin: "12px" }}>
-                    {product && product.ept_image_ids[0].url ? (
+                    {product && product.ept_image_ids[0] && product.ept_image_ids[0].url ? (
                         <Card.Img
                             variant="top"
                             src={product.ept_image_ids[0].url}

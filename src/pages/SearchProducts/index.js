@@ -8,13 +8,12 @@ import * as Utils from "../../utils";
 
 function SearchProducts(props) {
     const [categories, setCategories] = useState([]);
-    let sessionUserInfo = JSON.parse(sessionStorage.getItem(Utils.SESSION_STORE_OWNER));
 
     useEffect(() => {
         const getCategories = async () => {
+            let sessionUserInfo = JSON.parse(sessionStorage.getItem(Utils.SESSION_STORE_OWNER));
             const apiUrlByCategories = `${process.env.REACT_APP_API_URL}/product.category`;
             const apiUrlByNodeProductIds = `${process.env.REACT_APP_NODE_SERVER_URL}/v1/product/get/productIds/${sessionUserInfo._id}`;
-            console.log(apiUrlByNodeProductIds);
 
             await Promise.all([
                 axios.get(apiUrlByCategories, {
@@ -50,7 +49,10 @@ function SearchProducts(props) {
     return (
         <div className="mr-4">
             <p className="menu-title">Search Products</p>
-            <SearchProductsBar placeHolder={Utils.SEARCH_PLACEHOLDER_FOR_PRODUCTS} />
+            <SearchProductsBar
+                placeHolder={Utils.SEARCH_PLACEHOLDER_FOR_PRODUCTS}
+                searchIndex={Utils.SEARCH_FROM_PRODUCT}
+            />
             <div className="ml-3">
                 <div className="container mt-5">
                     <div className="d-flex justify-content-center">

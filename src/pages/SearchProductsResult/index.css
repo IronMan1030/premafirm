@@ -5,3 +5,10 @@
     color: #e91e63 !important;
     text-decoration: none;
 }
+.pagination > li {
+    border: 1px solid #d2dce8;
+    padding: 5px 15px;
+}
+.pagination > li > a {
+    color: #8f9eaa;
+}

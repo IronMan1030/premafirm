@@ -19,7 +19,7 @@
 .order-button {
     box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
     background: linear-gradient(60deg, #ffa726, #fb8c00);
-    border-radius: 5px;
+    border-radius: 4px;
     border-color: white;
     color: white;
     border: none;

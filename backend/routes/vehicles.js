@@ -68,10 +68,7 @@ router.get("/delete/:id", (req, res) => {
 });
 
 router.post("/update", (req, res) => {
-    Vehicle.updateMany(
-        { _id: req.body.id },
-        { $set: { type: req.body.type, monthly_rental: req.body.monthly_rental } }
-    )
+    Vehicle.updateMany({ _id: req.body.id }, { $set: { type: req.body.type, monthly_rental: req.body.monthly_rental } })
         .then((data) => {
             res.send(data);
         })

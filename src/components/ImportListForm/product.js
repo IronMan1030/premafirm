@@ -10,7 +10,14 @@ function Product(props) {
     const refTags = useRef();
 
     const handleChangeProduct = (e) => {
-        console.log(refTitle.current.value);
+        const productInfo = {
+            title: refTitle.current.value,
+            // collection: refCollections.current.value,
+            vendor: "Burton",
+            product_type: refType.current.value,
+            tags: [refTags.current.value],
+        };
+        props.handleSaveProduct(productInfo);
     };
     return (
         <div className="block-data-list">
