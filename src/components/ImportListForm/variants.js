@@ -4,17 +4,18 @@ function Variants(props) {
   const [variants, setVariants] = useState(props.originVariants);
 
   const [checkAll, setCheckAll] = useState(false);
+  // const [isVariantValue, setVariantValue] = useState(false);
   // const refSku = useRef();
   // const refColor = useRef();
   // const refPrice = useRef();
 
-  useEffect(() => {
-    const newVariants = props.originVariants.map((v) => {
-      let colorValue = v.product_template_attribute_value_ids.find((obj) => obj.attribute_name.includes("Color"))?.name;
-      return { ...v, sku: `${new Date().getTime()} - ${colorValue}` };
-    });
-    setVariants(newVariants);
-  }, [props.originVariants]);
+  // useEffect(() => {
+  //   const newVariants = props.originVariants.map((v) => {
+  //     let colorValue = v.product_template_attribute_value_ids.find((obj) => obj.attribute_name.includes("Color"))?.name;
+  //     return colorValue;
+  //   });
+  //   setVariants(newVariants);
+  // }, [props.originVariants]);
   const arrayVariantList = [
     {
       id: 1,
@@ -200,6 +201,7 @@ function Variants(props) {
                           onChange={(e) => handleChangeSku(variant, e.target.value)}
                         />
                       </td>
+
                       <td className="padding">
                         <Form.Control
                           type="text"
@@ -207,6 +209,7 @@ function Variants(props) {
                           onChange={(e) => handleChangeColor(variant, e.target.value)}
                         />
                       </td>
+
                       <td className="padding">
                         <div className="yan-cost">
                           <b>{`$${variant.standard_price}`}</b>

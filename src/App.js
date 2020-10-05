@@ -11,6 +11,10 @@ import ProductDetail from "./pages/ProductDetail";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Faq from "./pages/Faq";
+import Ticket from "./pages/Ticket";
+import CreateTicket from "./pages/Ticket/create";
+import DetailTicket from "./pages/Ticket/details";
 
 import { SESSION_STORE_OWNER } from "./utils";
 
@@ -27,32 +31,16 @@ function App() {
             <div className="right-panel">
               <Switch>
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route
-                  exact
-                  path="/products/searchProduct"
-                  component={SearchProducts}
-                />
-                <Route
-                  exact
-                  path="/products/searchProduct/productDetail/:productId"
-                  component={ProductDetail}
-                />
-                <Route
-                  exact
-                  path="/products/searchProduct/result/:categoryId"
-                  component={SearchProductsResult}
-                />
-                <Route
-                  exact
-                  path="/products/importList"
-                  component={ImportList}
-                />
-                <Route
-                  exact
-                  path="/products/myProducts"
-                  component={MyProducts}
-                />
+                <Route exact path="/products/searchProduct" component={SearchProducts} />
+                <Route exact path="/products/searchProduct/productDetail/:productId" component={ProductDetail} />
+                <Route exact path="/products/searchProduct/result/:categoryId" component={SearchProductsResult} />
+                <Route exact path="/products/importList" component={ImportList} />
+                <Route exact path="/products/myProducts" component={MyProducts} />
                 <Route exact path="/manageOrders/orders" component={Orders} />
+                <Route exact path="/helpCenter/faq" component={Faq} />
+                <Route exact path="/helpCenter/ticket" component={Ticket} />
+                <Route exact path="/helpCenter/ticket/create" component={CreateTicket} />
+                <Route exact path="/helpCenter/ticket/detail" component={DetailTicket} />
               </Switch>
             </div>
           </BrowserRouter>

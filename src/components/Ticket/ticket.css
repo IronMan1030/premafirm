@@ -1,0 +1,47 @@
+.open-ticket {
+  padding-bottom: 40px;
+}
+.open-ticket .header {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 0;
+  border-bottom: 1px solid #bec0c2;
+  text-align: center;
+}
+.open-ticket .header .ticket-title {
+  position: relative;
+  top: 10px;
+  display: inline-block;
+  padding-right: 1em;
+  padding-left: 1em;
+  background: #eee;
+}
+.open-ticket .table-section {
+  width: 100%;
+  overflow-y: scroll;
+  width: 100%;
+  margin-top: 35px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.open-ticket .table-section thead {
+  color: #a5a5a5;
+  font-size: 18px;
+}
+.open-ticket .table-section tr {
+  border-bottom: 1px solid #bec0c2;
+  height: 70px;
+}
+.open-ticket .table-section .info-block {
+  position: relative;
+  border-left: 1px solid #bec0c2;
+  padding-left: 10px;
+}
+.create-ticket {
+  padding-right: 150px !important;
+  padding-left: 150px !important;
+}
+.create-ticket .btn-send {
+  width: 200px;
+  float: right;
+}

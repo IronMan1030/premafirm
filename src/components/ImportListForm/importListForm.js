@@ -14,36 +14,104 @@ function ImportListForm(props) {
   const { originProduct } = props;
   const [tabActive, setTabActive] = useState(1);
   const [postProduct, setPostProduct] = useState([]);
+  const [postImages, setPostImages] = useState([]);
+  const [postVariants, setPostVariants] = useState([]);
   const [isProcessing, setProcessing] = useState(false);
 
   useEffect(() => {
     let initProduct =
       originProduct &&
       [originProduct].map((product) => {
-        let newVariants = product.originProduct.product_variant_ids.map((variant) => {
-          let colorValue = variant.product_template_attribute_value_ids.find((obj) =>
-            obj.attribute_name.includes("Color")
-          )?.name;
-          let v = {
-            option1: colorValue,
-            price: variant.list_price,
-            sku: `${new Date().getTime()} - ${colorValue}`,
-          };
-          return v;
+        let newVariantList = setNewVariants(product.originProduct.product_variant_ids);
+
+        let newImages = product.originProduct.ept_image_ids.map((image) => {
+          return { src: image.url };
         });
+
         let newProduct = {
           product: {
             title: product.originProduct.name,
             body_html: product.originProduct.description,
             vendor: "Nelson",
             product_type: "",
-            variants: newVariants,
+            variants: newVariantList.newVariants,
+            images: newImages,
+            options: newVariantList.variantsOptions,
           },
         };
         return newProduct;
       });
     setPostProduct(initProduct[0]);
   }, [originProduct]);
+
+  const setNewVariants = (variants) => {
+    let newVariants = [];
+    let colorValueList = [];
+    let sizeValueList = [];
+    let variantOptions = [];
+    variants.map((variant) => {
+      let colorValue = variant.product_template_attribute_value_ids.find((obj) => obj.attribute_name.includes("Color"))
+        ?.name;
+      let sizeValue = variant.product_template_attribute_value_ids.find((obj) => obj.attribute_name.includes("Size"))
+        ?.name;
+      let v = null;
+      if (colorValue && sizeValue) {
+        v = {
+          option1: colorValue,
+          option2: sizeValue,
+          price: variant.list_price,
+          sku: variant.sku,
+          inventory_management: "shopify",
+        };
+        colorValueList.push(colorValue);
+        sizeValueList.push(sizeValue);
+      } else if (colorValue) {
+        v = {
+          option1: colorValue,
+          price: variant.list_price,
+          sku: variant.sku,
+          inventory_management: "shopify",
+        };
+        colorValueList.push(colorValue);
+      } else if (sizeValue) {
+        v = {
+          option1: sizeValue,
+          price: variant.list_price,
+          sku: variant.sku,
+          inventory_management: "shopify",
+        };
+        sizeValueList.push(sizeValue);
+      } else {
+        v = {
+          price: variant.list_price,
+          sku: variant.sku,
+          inventory_management: "shopify",
+        };
+      }
+      newVariants.push(v);
+    });
+
+    if (colorValueList.length && sizeValueList.length) {
+      variantOptions = [
+        {
+          name: "Color",
+          values: colorValueList,
+        },
+        { name: "Size", values: sizeValueList },
+      ];
+    } else if (colorValueList.length) {
+      variantOptions = [
+        {
+          name: "Color",
+          values: colorValueList,
+        },
+      ];
+    } else if (sizeValueList.length) {
+      variantOptions = [{ name: "Size", values: sizeValueList }];
+    }
+
+    return { newVariants: newVariants, variantsOptions: variantOptions };
+  };
 
   const handleChangeTab = (id) => {
     setTabActive(id);
@@ -85,7 +153,9 @@ function ImportListForm(props) {
 
   const handleSaveProduct = (product) => {
     let newProduct = { ...postProduct };
-    newProduct.product = product;
+    newProduct.product.title = product.title;
+    newProduct.product.product_type = product.product_type;
+    newProduct.product.tags = product.tags;
     setPostProduct(newProduct);
   };
 
@@ -96,13 +166,11 @@ function ImportListForm(props) {
   };
 
   const handleSaveVariants = (value) => {
-    let newVariants = value.map((variant) => {
-      let v = { option1: "first", price: variant.list_price, sku: variant.sku };
-      return v;
-    });
+    let variantList = setNewVariants(value);
 
     let newProduct = { ...postProduct };
-    newProduct.product.variants = newVariants;
+    newProduct.product.variants = variantList.newVariants;
+    newProduct.product.options = variantList.variantsOptions;
     setPostProduct(newProduct);
   };
 
@@ -110,54 +178,92 @@ function ImportListForm(props) {
     console.log(images);
   };
 
-  // const handleClickStore = async () => {
-  //   console.log(postProduct);
-  //   let response = await axios.post(`${process.env.REACT_APP_NODE_SERVER_URL}/v1/shopify/import/product`, {
-  //     shop: "permadev.myshopify.com",
-  //     product: postProduct,
-  //   });
-  //   if (response.data.error) {
-  //     console.log(response.data.error);
-  //   } else {
-  //     console.log(response.data);
-  //   }
-  // };
-
   const handleClickStore = async () => {
-    // console.log(postProduct);
-    let testProduct = {
-      product: {
-        title: "Abby Toddler Bed",
-        body_html: "<p>test</p>",
-        vendor: "Nelson",
-        product_type: "",
-        variants: [
-          {
-            option1: "blue",
-            option2: "153",
-            price: "10.00",
-            sku: "123",
-          },
-          {
-            option1: "black",
-            option2: "155",
-            price: "20.00",
-            sku: "123",
-          },
-        ],
-      },
-    };
+    setProcessing(true);
+
+    // Get Location
+    let responseLocations = null;
     try {
-      let response = await axios.get(`https://permadev.myshopify.com/admin/api/2020-07/products.json`, {
-        headers: {
-          "X-Shopify-Access-Token": "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",
-          "content-type": "application/json",
-        },
+      responseLocations = await axios.post(`${process.env.REACT_APP_NODE_SERVER_URL}/v1/shopify/locations`, {
+        shop: "permadev.myshopify.com",
+        token: "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",
       });
-      console.log(response.data);
+      if (responseLocations.data.error) {
+        console.log(responseLocations.data.error);
+        setProcessing(false);
+        return;
+      } else {
+        console.log(responseLocations.data);
+      }
+    } catch (error) {
+      setProcessing(false);
+      console.log(error);
+    }
+    //Export Product
+    console.log(postProduct);
+    try {
+      let response = await axios.post(`${process.env.REACT_APP_NODE_SERVER_URL}/v1/shopify/export/product`, {
+        shop: "permadev.myshopify.com",
+        token: "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",
+        product: postProduct,
+      });
+      response.data.product.variants.map(async (variant) => {
+        let originVariant = originProduct.originProduct.product_variant_ids.find((obj) =>
+          obj.sku.includes(variant.sku)
+        );
+        let originImage = originVariant && originVariant.ept_image_ids;
+        if (originImage === undefined || originImage.length <= 0) {
+          return;
+        }
+        let originImageName = originImage[0].url.split("/")[5];
+        let imageId = response.data.product.images.find((obj) =>
+          obj.src.includes(originImageName.substr(0, originImageName.length - 1))
+        )?.id;
+        let v = {
+          variant: {
+            id: variant.id,
+            image_id: imageId,
+          },
+        };
+        try {
+          let responseVariants = await axios.post(
+            `${process.env.REACT_APP_NODE_SERVER_URL}/v1/shopify/export/variant`,
+            {
+              shop: "permadev.myshopify.com",
+              token: "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",
+              vId: variant.id,
+              variant: v,
+              inventoryItemId: variant.inventory_item_id,
+              locationId: responseLocations.data.locations[0].id,
+              quantity: originVariant.qty_available,
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      try {
+        let responseToSave = await axios.post(`${process.env.REACT_APP_NODE_SERVER_URL}/v1/shopify/product/update`, {
+          productId: originProduct._id,
+          product: response.data,
+        });
+        setProcessing(false);
+        if (responseToSave.data.error) {
+          console.log(responseToSave);
+        } else {
+          let sessionProductIds = JSON.parse(sessionStorage.getItem(Utils.SESSION_PRODUCT_IDS));
+          const removedProductIds = sessionProductIds.filter((item) => item !== originProduct.originProduct.id);
+          sessionStorage.setItem(JSON.stringify(removedProductIds));
+          window.location.href = "/products/importList";
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
     }
+    setProcessing(false);
   };
 
   const handleClickRemove = async (pId) => {

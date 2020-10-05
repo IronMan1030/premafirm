@@ -1,0 +1,20 @@
+.ticket-section .title {
+  font-size: 18px;
+  cursor: pointer;
+  color: #999;
+}
+.ticket-section .title:hover {
+  color: #3c4858 !important;
+}
+.ticket-section .container > div {
+  border-bottom: 1px solid #afafaf;
+}
+.ticket-section .is-active {
+  color: #e91e63 !important;
+  border-bottom: 3px solid #e91e63 !important;
+  text-shadow: 0 0 0.65px #e91e63, 0 0 0.65px #e91e63;
+  padding-bottom: 10px;
+}
+.ticket-section .is-active:hover {
+  color: #e91e63 !important;
+}

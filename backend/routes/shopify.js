@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const querystring = require("querystring");
 const axios = require("axios");
 let Shopify = require("../models/shopify.model");
+let Product = require("../models/product.model");
 
 const appId = process.env.SHOPIFY_API_KEY;
 const appSecret = process.env.SHOPIFY_SECRET_KEY;
@@ -67,20 +68,101 @@ router.get("/auth", async (req, res) => {
   }
 });
 
-router.post("/import/product", async (req, res) => {
+router.post("/export/product", async (req, res) => {
   const shop = req.body.shop;
   const product = req.body.product;
-  console.log(product);
+  const token = req.body.token;
+
   try {
     let response = await axios.post(`https://${shop}/admin/api/2020-07/products.json`, product, {
       headers: {
-        "X-Shopify-Access-Token": "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",
+        "X-Shopify-Access-Token": token,
         "content-type": "application/json",
       },
     });
     res.json(response.data);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({ error: "shopifyError" });
+  }
+});
+
+router.post("/export/variant", async (req, res) => {
+  const shop = req.body.shop;
+  const variant = req.body.variant;
+  const vId = parseInt(req.body.vId);
+  const token = req.body.token;
+  const inventoryItemId = req.body.inventoryItemId;
+  const locationId = req.body.locationId;
+  const quantity = req.body.quantity;
+  try {
+    let response = await axios.put(`https://${shop}/admin/api/2020-07/variants/${vId}.json`, variant, {
+      headers: {
+        "X-Shopify-Access-Token": token,
+        "content-type": "application/json",
+      },
+    });
+    await axios.post(
+      `https://${shop}/admin/api/2020-07/inventory_levels/set.json`,
+      { location_id: locationId, inventory_item_id: inventoryItemId, available: quantity },
+      {
+        headers: {
+          "X-Shopify-Access-Token": token,
+          "content-type": "application/json",
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    res.status(400).json({ error: "shopifyError" });
+  }
+});
+
+router.post("/locations", async (req, res) => {
+  const shop = req.body.shop;
+  const token = req.body.token;
+  try {
+    let response = await axios.get(`https://${shop}/admin/api/2020-07/locations.json`, {
+      headers: {
+        "X-Shopify-Access-Token": token,
+        "content-type": "application/json",
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(400).json({ error: "shopifyError" });
+  }
+});
+
+router.post("/product/update", async (req, res) => {
+  let dataToSave = req.body;
+  let result = null;
+  try {
+    result = await Product.findByIdAndUpdate(
+      dataToSave.productId,
+      { isExport: 1, exportedProduct: dataToSave.product },
+      { new: true }
+    );
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: "databaseFailed" });
+  }
+});
+
+router.post("/get/products", async (req, res) => {
+  const shop = req.body.shop;
+  const token = req.body.token;
+  const productIds = req.body.productIds;
+  try {
+    let apiUrl = `https://${shop}/admin/api/2020-07/products.json?ids=${parseInt(productIds)}`;
+    let response = await axios.get(apiUrl, {
+      headers: {
+        "X-Shopify-Access-Token": token,
+        "content-type": "application/json",
+      },
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(400).json({ error: "databaseFailed" });
   }
 });
 
